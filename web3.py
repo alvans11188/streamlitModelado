@@ -1335,7 +1335,7 @@ def main():
     }
 
     .animated-header h1 {
-    font-size: 2.5em; /* Ajusta el tamaño si es necesario */
+    font-size: 4.5em; /* Ajusta el tamaño si es necesario */
     background: linear-gradient(45deg, #FAD7A0, #F9E79F, #82E0AA, #A9CCE3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1344,6 +1344,7 @@ def main():
 
     .animated-header h3 {
         font-weight: 300;
+        font-size: 3.5em;
         background: linear-gradient(45deg, #A9CCE3, #E8DAEF);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -1443,7 +1444,7 @@ def main():
         .card li:hover {
             color: #FFFFFF; /* Texto más brillante */
             background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil que resalta */
-            transform: translateX(15px); /* Se mueve a la derecha */
+            transform: translateX(15px) scale(1.1); /* Se mueve a la derecha */
             border-bottom-color: transparent; /* Ocultamos la línea para un look más limpio */
         }
 
