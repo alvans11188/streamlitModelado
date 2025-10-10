@@ -108,11 +108,11 @@ def metodo_biseccion_ui():
             # Mostrar resultados
             col_m1, col_m2, col_m3 = st.columns(3)
             with col_m1:
-                st.metric(" Raíz aproximada", f"{c:.8f}")
+                st.metric(" Raíz aproximada", f"{c:.4f}")
             with col_m2:
                 st.metric(" Iteraciones", iteracion)
             with col_m3:
-                st.metric(" Tolerancia", f"{tol:.6f}")
+                st.metric(" Tolerancia", f"{tol:.4f}")
             
             # Gráfica y tabla en columnas
             col_graf, col_tab = st.columns([1.5, 1])
@@ -137,6 +137,7 @@ def metodo_biseccion_ui():
             with col_tab:
                 st.subheader(" Tabla de iteraciones")
                 df = pd.DataFrame(iteraciones)
+                df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
                 
                 csv = df.to_csv(index=False)
@@ -170,7 +171,7 @@ def metodo_secante_ui():
         )
     
     with col2:
-        tol = st.number_input("Tolerancia:", value=0.0001, format="%.6f", key="secante_tol")
+        tol = st.number_input("Tolerancia:", value=0.0001, format="%.4f", key="secante_tol")
     
     col_x0, col_x1, col_max = st.columns(3)
     with col_x0:
@@ -217,7 +218,7 @@ def metodo_secante_ui():
             # Resultados
             col_m1, col_m2, col_m3 = st.columns(3)
             with col_m1:
-                st.metric(" Raíz aproximada", f"{x2:.8f}")
+                st.metric(" Raíz aproximada", f"{x2:.4f}")
             with col_m2:
                 st.metric(" Iteraciones", iteracion)
             with col_m3:
@@ -246,6 +247,7 @@ def metodo_secante_ui():
             with col_tab:
                 st.subheader(" Tabla de iteraciones")
                 df = pd.DataFrame(iteraciones)
+                df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
                 
                 csv = df.to_csv(index=False)
@@ -299,13 +301,13 @@ def newton_raphson_2v_ui():
             guess = [x0_init, y0_init]
             sol = fsolve(sistema, guess)
             
-            st.success(f" Solución encontrada: x = {sol[0]:.6f}, y = {sol[1]:.6f}")
+            st.success(f" Solución encontrada: x = {sol[0]:.4f}, y = {sol[1]:.4f}")
             
             col_m1, col_m2 = st.columns(2)
             with col_m1:
-                st.metric("x", f"{sol[0]:.8f}")
+                st.metric("x", f"{sol[0]:.4f}")
             with col_m2:
-                st.metric("y", f"{sol[1]:.8f}")
+                st.metric("y", f"{sol[1]:.4f}")
             
             # Gráfica
             st.subheader(" Curvas de nivel f₁=0 y f₂=0")
@@ -371,15 +373,15 @@ def newton_raphson_3v_ui():
             guess = [x0_init, y0_init, z0_init]
             sol = fsolve(sistema, guess)
             
-            st.success(f" Solución: x={sol[0]:.6f}, y={sol[1]:.6f}, z={sol[2]:.6f}")
+            st.success(f" Solución: x={sol[0]:.4f}, y={sol[1]:.4f}, z={sol[2]:.4f}")
             
             col_m1, col_m2, col_m3 = st.columns(3)
             with col_m1:
-                st.metric("x", f"{sol[0]:.8f}")
+                st.metric("x", f"{sol[0]:.4f}")
             with col_m2:
-                st.metric("y", f"{sol[1]:.8f}")
+                st.metric("y", f"{sol[1]:.4f}")
             with col_m3:
-                st.metric("z", f"{sol[2]:.8f}")
+                st.metric("z", f"{sol[2]:.4f}")
             
             # Gráfica 3D de trayectoria
             st.subheader(" Trayectoria de convergencia")
@@ -496,9 +498,9 @@ def newton_modificado_2v_ui():
             
             col_m1, col_m2, col_m3 = st.columns(3)
             with col_m1:
-                st.metric("x", f"{x0:.8f}")
+                st.metric("x", f"{x0:.4f}")
             with col_m2:
-                st.metric("y", f"{y0:.8f}")
+                st.metric("y", f"{y0:.4f}")
             with col_m3:
                 st.metric("Iteraciones", i+1)
             
@@ -532,6 +534,7 @@ def newton_modificado_2v_ui():
             with col_tab:
                 st.subheader(" Tabla de iteraciones")
                 df = pd.DataFrame(datos)
+                df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
                 
                 csv = df.to_csv(index=False)
@@ -639,11 +642,11 @@ def newton_modificado_3v_ui():
             
             col_m1, col_m2, col_m3, col_m4 = st.columns(4)
             with col_m1:
-                st.metric("x", f"{x0:.8f}")
+                st.metric("x", f"{x0:.4f}")
             with col_m2:
-                st.metric("y", f"{y0:.8f}")
+                st.metric("y", f"{y0:.4f}")
             with col_m3:
-                st.metric("z", f"{z0:.8f}")
+                st.metric("z", f"{z0:.4f}")
             with col_m4:
                 st.metric("Iteraciones", i+1)
             
@@ -674,6 +677,7 @@ def newton_modificado_3v_ui():
             with col_tab:
                 st.subheader(" Tabla de iteraciones")
                 df = pd.DataFrame(datos)
+                df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
                 
                 csv = df.to_csv(index=False)
@@ -769,9 +773,9 @@ def punto_fijo_2v_ui():
             
             col_m1, col_m2, col_m3 = st.columns(3)
             with col_m1:
-                st.metric("x", f"{v[0]:.8f}")
+                st.metric("x", f"{v[0]:.4f}")
             with col_m2:
-                st.metric("y", f"{v[1]:.8f}")
+                st.metric("y", f"{v[1]:.4f}")
             with col_m3:
                 st.metric("Iteraciones", len(datos))
             
@@ -807,6 +811,7 @@ def punto_fijo_2v_ui():
             with col_tab:
                 st.subheader(" Tabla de iteraciones")
                 df = pd.DataFrame(datos)
+                df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
                 
                 csv = df.to_csv(index=False)
@@ -906,11 +911,11 @@ def punto_fijo_3v_ui():
             
             col_m1, col_m2, col_m3, col_m4 = st.columns(4)
             with col_m1:
-                st.metric("x", f"{v[0]:.8f}")
+                st.metric("x", f"{v[0]:.4f}")
             with col_m2:
-                st.metric("y", f"{v[1]:.8f}")
+                st.metric("y", f"{v[1]:.4f}")
             with col_m3:
-                st.metric("z", f"{v[2]:.8f}")
+                st.metric("z", f"{v[2]:.4f}")
             with col_m4:
                 st.metric("Iteraciones", len(datos))
             
@@ -941,6 +946,7 @@ def punto_fijo_3v_ui():
             with col_tab:
                 st.subheader(" Tabla de iteraciones")
                 df = pd.DataFrame(datos)
+                df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
                 
                 csv = df.to_csv(index=False)
@@ -1120,6 +1126,7 @@ def sistemas_lineales_ui():
                         
                         with col_tab:
                             st.write("**Historial de iteraciones:**")
+                            df = df.round(3)
                             st.dataframe(df, use_container_width=True, height=400)
                         return
                     
@@ -1127,6 +1134,7 @@ def sistemas_lineales_ui():
                 
                 st.warning(f"️ No convergió en {max_iter} iteraciones")
                 df = pd.DataFrame(historial, columns=["Iteración"] + [f"x{i+1}" for i in range(n_size)])
+                df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
         
         except Exception as e:
@@ -1419,29 +1427,66 @@ def main():
         # Ejemplos rápidos
         with st.expander(" Ejemplos de funciones que puedes usar"):
             st.code("""
-# Polinomiales
-x**3 - x - 2
-x**4 - x - 10
-x**2 - 4
+            # Polinomiales
+            x**3 - x - 2
+            x**4 - x - 10
+            x**2 - 4
 
-# Exponenciales
-exp(x) - 3*x
-2**x - x - 3
+            # Exponenciales
+            exp(x) - 3*x
+            2**x - x - 3
 
-# Trigonométricas
-sin(x) - x/2
-cos(x) - x
-tan(x) - x
+            # Trigonométricas
+            sin(x) - x/2
+            cos(x) - x
+            tan(x) - x
 
-# Logarítmicas
-log(x) - 1/x
-x*log(x) - 1
+            # Logarítmicas
+            log(x) - 1/x
+            x*log(x) - 1
 
-# Mixtas
-exp(x) - 3*x**2 + 2*sin(x)
-x**3 - cos(x) - 1
-log(x+1) + x**2 - 3
+            # Mixtas
+            exp(x) - 3*x**2 + 2*sin(x)
+            x**3 - cos(x) - 1
+            log(x+1) + x**2 - 3
             """, language="python")
+        # ======================
+        # SECCIÓN DE IMÁGENES LOCALES
+        # ======================
+
+        st.markdown("<hr>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:center; color:#2E86C1;'>Aplicaciones y Métodos Ilustrativos</h3>", unsafe_allow_html=True)
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.image(
+                "images/bisection.png",
+                caption="Método de Bisección — búsqueda de raíces.",
+                use_container_width=True
+            )
+
+        with col2:
+            st.image(
+                "images/gauss.png",
+                caption="Eliminación de Gauss — resolución de sistemas lineales.",
+                use_container_width=True
+            )
+
+        with col3:
+            st.image(
+                "images/matrix.png",
+                caption="Operaciones matriciales — base del álgebra numérica.",
+                use_container_width=True
+            )
+
+        st.markdown("""
+        <div style='text-align:center; color:#5D6D7E; font-size:15px; margin-top:10px;'>
+        Estas imágenes ilustran los principios matemáticos abordados en los módulos de esta aplicación:
+        <br><b>Sistemas no lineales</b>, <b>ecuaciones lineales</b> y <b>álgebra matricial</b>.
+        </div>
+        """, unsafe_allow_html=True)
+
     
     elif categoria == " Sistemas No Lineales":
         st.markdown("<h2 style='text-align:center;'>Sistemas No Lineales</h2>", unsafe_allow_html=True)
