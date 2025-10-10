@@ -1368,9 +1368,30 @@ def main():
         # 1. CÓDIGO CSS PARA ESTILOS Y ANIMACIONES
         st.markdown("""
         <style>
+        /* Animación de entrada general */
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* NUEVA animación de rebote para los elementos de la lista */
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(10px);
+            }
+            50% {
+                opacity: 0.9;
+                transform: scale(1.1);
+            }
+            80% {
+                opacity: 1;
+                transform: scale(0.89);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .card {
@@ -1388,7 +1409,7 @@ def main():
             transform: translateY(-10px);
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
         }
-        
+
         .card h3, .card h4 {
             color: #FFFFFF;
             margin-top: 0;
@@ -1400,17 +1421,47 @@ def main():
             list-style-type: none;
             padding-left: 0;
         }
-        
+
+        /* --- SECCIÓN MODIFICADA Y AÑADIDA --- */
+
         .card li {
-            padding: 8px 0px;
+            padding: 10px 15px; /* Aumentamos el padding para mejor interacción */
             color: #f0f0f0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px; /* Bordes redondeados para el hover */
+            
+            /* Propiedades para la animación */
+            opacity: 0; /* Empiezan invisibles para la animación de entrada */
+            animation: bounceIn 0.5s forwards; /* Aplicamos la animación de rebote */
+            
+            /* Propiedades para la interacción del cursor */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
         }
-        
+
+        /* NUEVO: Efecto al pasar el cursor sobre un elemento de la lista */
+        .card li:hover {
+            color: #FFFFFF; /* Texto más brillante */
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil que resalta */
+            transform: translateX(15px); /* Se mueve a la derecha */
+            border-bottom-color: transparent; /* Ocultamos la línea para un look más limpio */
+        }
+
+        /* NUEVO: Retraso escalonado para la animación de entrada */
+        .card li:nth-child(1) { animation-delay: 0.1s; }
+        .card li:nth-child(2) { animation-delay: 0.2s; }
+        .card li:nth-child(3) { animation-delay: 0.3s; }
+        .card li:nth-child(4) { animation-delay: 0.4s; }
+        .card li:nth-child(5) { animation-delay: 0.5s; }
+        .card li:nth-child(6) { animation-delay: 0.6s; }
+        .card li:nth-child(7) { animation-delay: 0.7s; }
+        .card li:nth-child(8) { animation-delay: 0.8s; }
+        /* Puedes añadir más si tienes listas más largas */
+
         .card li:last-child {
             border-bottom: none;
         }
-        
+
         .welcome-text {
             text-align: center;
             animation: fadeIn 1s ease-out;
@@ -1471,40 +1522,9 @@ def main():
                 </ul>
             </div>
             """, unsafe_allow_html=True)
-
-        # 3. CÓDIGO DE LAS IMÁGENES (ESTE ES EL BLOQUE QUE FALTABA)
-        st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align:center;'>Métodos Numéricos en Acción</h3>", unsafe_allow_html=True)
         
-        col_img1, col_img2, col_img3, col_img4 = st.columns(4)
-
-        with col_img1:
-            st.image(
-                "images/bisection.png",
-                caption="Búsqueda de raíces.",
-                use_container_width=True
-            )
-
-        with col_img2:
-            st.image(
-                "images/gauss.png",
-                caption="Sistemas lineales.",
-                use_container_width=True
-            )
-
-        with col_img3:
-            st.image(
-                "images/matrix.png",
-                caption="Álgebra matricial.",
-                use_container_width=True
-            )
         
-        with col_img4:
-            st.image(
-                "images/beba1.png", # Asegúrate de que esta imagen exista
-                caption="Paciente 0 Bebalaria",
-                use_container_width=True
-            )
+        
     elif categoria == " Sistemas No Lineales":
         st.markdown("<h2 style='text-align:center;'>Sistemas No Lineales</h2>", unsafe_allow_html=True)
         st.markdown("---")
