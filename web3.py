@@ -1365,127 +1365,139 @@ def main():
     )
     
     if categoria == " Inicio":
-        st.header(" Bienvenido")
-        
+        # 1. CÓDIGO CSS PARA ESTILOS Y ANIMACIONES (Sin cambios)
         st.markdown("""
-        Esta aplicación web implementa diversos **métodos numéricos** estudiados en el curso de Modelado Computacional.
-        
-        ###  Contenido disponible:
-        
-        #### 1- **Sistemas No Lineales**
-        -  Método de Bisección
-        -  Método de la Secante
-        -  Newton-Raphson (2 variables)
-        -  Newton-Raphson (3 variables)
-        -  Newton-Raphson Modificado (2 variables)
-        -  Newton-Raphson Modificado (3 variables)
-        -  Método de Punto Fijo (2 variables)
-        -  Método de Punto Fijo (3 variables)
-        
-        #### 2- **Sistemas de Ecuaciones Lineales**
-        
-        **Métodos Directos:**
-        -  Método de la Inversa
-        -  Eliminación de Gauss
-        -  Gauss-Jordan
-        
-        **Métodos Iterativos:**
-        -  Jacobi
-        -  Gauss-Seidel
-        
-        #### 3- **Álgebra Matricial**
-        -  Suma de matrices
-        - ️ Multiplicación de matrices
-        -  Determinante
-        -  Inversa de matriz
-        
-        ---
-        
-        ###  ¿Cómo usar esta aplicación?
-        
-        1. Selecciona una categoría en el menú lateral
-        2. Elige el método específico que quieres usar
-        3. Ingresa los parámetros requeridos
-        4. Presiona el botón "Calcular"
-        5. Visualiza los resultados, gráficas y tablas
-        6. Descarga los datos en formato CSV si lo necesitas
-        
-        ---
-        
-        ###  Notas importantes:
-        
-        - Las funciones se ingresan usando notación Python: `**` para potencias, `sin(x)`, `cos(x)`, `exp(x)`, `log(x)`, etc.
-        - Los métodos iterativos muestran el historial completo de iteraciones
-        - Todas las gráficas son interactivas y puedes descargarlas
-        - Los resultados se muestran con alta precisión (8 decimales)
-        
-        ---
-        
-        ###  Ejemplos:
-        """)
-        
-        # Ejemplos rápidos
-        with st.expander(" Ejemplos de funciones que puedes usar"):
-            st.code("""
-            # Polinomiales
-            x**3 - x - 2
-            x**4 - x - 10
-            x**2 - 4
+        <style>
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-            # Exponenciales
-            exp(x) - 3*x
-            2**x - x - 3
+        .card {
+            background-color: #1a1a2e;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2a4e;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
 
-            # Trigonométricas
-            sin(x) - x/2
-            cos(x) - x
-            tan(x) - x
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.7);
+        }
+        
+        .card h3 {
+            color: #e0e0e0;
+            margin-top: 0;
+            border-bottom: 2px solid #0f3460;
+            padding-bottom: 10px;
+        }
 
-            # Logarítmicas
-            log(x) - 1/x
-            x*log(x) - 1
+        .card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .card li {
+            padding: 8px 0px;
+            color: #a0a0c0;
+            border-bottom: 1px solid #2a2a4e;
+        }
+        
+        .card li:last-child {
+            border-bottom: none;
+        }
+        
+        .welcome-text {
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
-            # Mixtas
-            exp(x) - 3*x**2 + 2*sin(x)
-            x**3 - cos(x) - 1
-            log(x+1) + x**2 - 3
-            """, language="python")
-        # ======================
-        # SECCIÓN DE IMÁGENES LOCALES
-        # ======================
+        # 2. CÓDIGO DE LAS IMÁGENES (AHORA AL INICIO)
+        st.markdown("<h3 style='text-align:center;'>Métodos Numéricos en Acción</h3>", unsafe_allow_html=True)
+        
+        col_img1, col_img2, col_img3 = st.columns(3)
 
+        with col_img1:
+            st.image(
+                "images/bisection.png",
+                caption="Búsqueda de raíces (Bisección).",
+                use_container_width=True
+            )
+
+        with col_img2:
+            st.image(
+                "images/gauss.png",
+                caption="Sistemas lineales (Gauss).",
+                use_container_width=True
+            )
+
+        with col_img3:
+            st.image(
+                "images/matrix.png",
+                caption="Álgebra matricial.",
+                use_container_width=True
+            )
+        
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown("<h3 style='text-align:center; color:#2E86C1;'>Aplicaciones y Métodos Ilustrativos</h3>", unsafe_allow_html=True)
+
+        # 3. ESTRUCTURA DE LA PÁGINA CON LAS TARJETAS (Sin cambios)
+        st.markdown("<div class='welcome-text'><h2>Contenido Disponible</h2></div>", unsafe_allow_html=True)
 
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.image(
-                "images/bisection.png",
-                caption="Método de Bisección — búsqueda de raíces.",
-                use_container_width=True
-            )
+            st.markdown("""
+            <div class="card">
+                <h3> Sistemas No Lineales</h3>
+                <ul>
+                    <li>Método de Bisección</li>
+                    <li>Método de la Secante</li>
+                    <li>Newton-Raphson (2 variables)</li>
+                    <li>Newton-Raphson (3 variables)</li>
+                    <li>Newton-Raphson Modificado (2 variables)</li>
+                    <li>Newton-Raphson Modificado (3 variables)</li>
+                    <li>Método de Punto Fijo (2 variables)</li>
+                    <li>Método de Punto Fijo (3 variables)</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
 
         with col2:
-            st.image(
-                "images/gauss.png",
-                caption="Eliminación de Gauss — resolución de sistemas lineales.",
-                use_container_width=True
-            )
+            st.markdown("""
+            <div class="card">
+                <h3> Sistemas de Ecuaciones Lineales</h3>
+                <h4>Métodos Directos:</h4>
+                <ul>
+                    <li>Método de la Inversa</li>
+                    <li>Eliminación de Gauss</li>
+                    <li>Gauss-Jordan</li>
+                </ul>
+                <h4>Métodos Iterativos:</h4>
+                <ul>
+                    <li>Jacobi</li>
+                    <li>Gauss-Seidel</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
 
         with col3:
-            st.image(
-                "images/matrix.png",
-                caption="Operaciones matriciales — base del álgebra numérica.",
-                use_container_width=True
-            )
-
-        st.markdown("""
-        <div style='text-align:center; color:#5D6D7E; font-size:15px; margin-top:10px;'>
-        Estas imágenes ilustran los principios matemáticos abordados en los módulos de esta aplicación:
-        <br><b>Sistemas no lineales</b>, <b>ecuaciones lineales</b> y <b>álgebra matricial</b>.
-        </div>
-        """, unsafe_allow_html=True)
+            st.markdown("""
+            <div class="card">
+                <h3> Álgebra Matricial</h3>
+                <ul>
+                    <li>Suma de matrices</li>
+                    <li>Multiplicación de matrices</li>
+                    <li>Determinante</li>
+                    <li>Inversa de matriz</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
 
     
     elif categoria == " Sistemas No Lineales":
