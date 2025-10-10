@@ -1143,7 +1143,45 @@ def sistemas_lineales_ui():
                 df = pd.DataFrame(historial, columns=["Iteración"] + [f"x{i+1}" for i in range(n_size)])
                 df = df.round(3)
                 st.dataframe(df, use_container_width=True, height=400)
-        
+                
+            elif metodo == "Gauss-Seidel (iterativo)":
+                n_size = len(b)
+                x = np.zeros(n_size)
+                historial = []
+                
+                for it in range(int(max_iter)):
+                    x_new = np.copy(x)
+                    for i in range(n_size):
+                        if abs(A[i][i]) < 1e-10:
+                            st.error(" Diagonal con cero en Gauss-Seidel")
+                            return
+                        s = sum(A[i][j] * x_new[j] for j in range(n_size) if j != i)
+                        x_new[i] = (b[i] - s) / A[i][i]
+                    
+                    historial.append([it+1] + list(x_new))
+                    
+                    if np.linalg.norm(x_new - x, ord=np.inf) < tol:
+                        st.success(f" Convergió en {it+1} iteraciones")
+                        df = pd.DataFrame(historial, columns=["Iteración"] + [f"x{i+1}" for i in range(n_size)])
+                        
+                        col_res, col_tab = st.columns([1, 2])
+                        with col_res:
+                            st.write("**Solución final:**")
+                            sol_df = pd.DataFrame({"Variable": [f"x{i+1}" for i in range(n_size)],
+                                                "Valor": x_new})
+                            st.dataframe(sol_df, use_container_width=True)
+                        
+                        with col_tab:
+                            st.write("**Historial de iteraciones:**")
+                            st.dataframe(df, use_container_width=True, height=400)
+                        return
+                    
+                    x = x_new
+                
+                st.warning(f" No convergió en {max_iter} iteraciones")
+                df = pd.DataFrame(historial, columns=["Iteración"] + [f"x{i+1}" for i in range(n_size)])
+                st.dataframe(df, use_container_width=True, height=400)
+
         except Exception as e:
             st.error(f" Error al resolver el sistema: {str(e)}")
 
@@ -1498,7 +1536,7 @@ def main():
         """, unsafe_allow_html=True)
 
         # 2. ESTRUCTURA DE LA PÁGINA CON LAS TARJETAS DE CONTENIDO
-        st.markdown("<div class='welcome-text'><h1>Contenido Disponible</h1></div>", unsafe_allow_html=True)
+        st.markdown("<div class='animated-header'><h1>Contenido Disponible</h1></div>", unsafe_allow_html=True)
         st.markdown("<hr>", unsafe_allow_html=True)
         # --- CARACTERISTICAS DE LOS GIFT ---
         gif_width = 250  # Definicion de ancho de los gift
