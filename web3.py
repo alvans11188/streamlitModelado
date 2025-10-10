@@ -41,6 +41,7 @@ def limpiar_input(texto):
 # FUNCIONES PARA SISTEMAS NO LINEALES
 # ===================================
 
+# FUNCION DEL METODO DE BISECCION
 def metodo_biseccion_ui():
     st.subheader(" Método de Bisección")
     
@@ -60,7 +61,7 @@ def metodo_biseccion_ui():
         )
     
     with col2:
-        tol = st.number_input("Tolerancia:", value=0.0001, format="%.6f")
+        tol = st.number_input("Tolerancia:", value=0.00000001, format="%.8f")
     
     col_a, col_b = st.columns(2)
     with col_a:
@@ -151,7 +152,7 @@ def metodo_biseccion_ui():
         except Exception as e:
             st.error(f" Error: {str(e)}")
 
-
+# FUNCION DEL METODO DE SECANTE
 def metodo_secante_ui():
     st.subheader(" Método de la Secante")
     
@@ -171,7 +172,7 @@ def metodo_secante_ui():
         )
     
     with col2:
-        tol = st.number_input("Tolerancia:", value=0.0001, format="%.4f", key="secante_tol")
+        tol = st.number_input("Tolerancia:", value=0.00000001, format="%.8f", key="secante_tol")
     
     col_x0, col_x1, col_max = st.columns(3)
     with col_x0:
@@ -261,7 +262,7 @@ def metodo_secante_ui():
         except Exception as e:
             st.error(f" Error: {str(e)}")
 
-
+# FUNCION DEL METODO NEWTON RAPHSON
 def newton_raphson_2v_ui():
     st.subheader(" Newton-Raphson (2 variables)")
     
@@ -333,7 +334,7 @@ def newton_raphson_2v_ui():
         except Exception as e:
             st.error(f" Error: {str(e)}")
 
-
+# FUNCION DEL METODO NEWTON RAPHSON PARA 3 VARIABLES
 def newton_raphson_3v_ui():
     st.subheader(" Newton-Raphson (3 variables)")
     
@@ -409,6 +410,7 @@ def newton_raphson_3v_ui():
         except Exception as e:
             st.error(f" Error: {str(e)}")
 
+# FUNCION DEL METODO NEWTON MODIFICADO PARA 2 VARIABLES
 def newton_modificado_2v_ui():
     st.subheader(" Newton-Raphson Modificado (2 variables)")
     
@@ -547,6 +549,8 @@ def newton_modificado_2v_ui():
         
         except Exception as e:
             st.error(f" Error: {str(e)}")
+
+#FUNCION DEL METODO NEWTON MODIFICADO PARA 3 VARIABLES
 
 def newton_modificado_3v_ui():
     st.subheader(" Newton-Raphson Modificado (3 variables)")
@@ -691,6 +695,8 @@ def newton_modificado_3v_ui():
         except Exception as e:
             st.error(f" Error: {str(e)}")
 
+# FUNCION DE PUNTO FIJO PARA 2 VARIABLES
+
 def punto_fijo_2v_ui():
     st.subheader(" Punto Fijo (2 variables)")
     
@@ -825,6 +831,7 @@ def punto_fijo_2v_ui():
         except Exception as e:
             st.error(f" Error: {str(e)}")
 
+# FUNCION DE PUNTO FIJO PARA 3 VARIABLES
 
 def punto_fijo_3v_ui():
     st.subheader(" Punto Fijo (3 variables)")
@@ -1152,7 +1159,7 @@ def algebra_matricial_ui():
         "Selecciona la operación:",
         ["Suma de matrices", "Multiplicación de matrices", "Determinante", "Inversa de matriz"]
     )
-    
+    # SUMA DE MATRICES
     if operacion == "Suma de matrices":
         st.info(" Suma dos matrices del mismo tamaño")
         
@@ -1194,7 +1201,9 @@ def algebra_matricial_ui():
             st.success(" Suma calculada")
             st.write("**Resultado: A + B =**")
             st.dataframe(pd.DataFrame(resultado), use_container_width=True)
-    
+
+    # MULTIPLICACION DE MATRICES
+
     elif operacion == "Multiplicación de matrices":
         st.info("️ Multiplica dos matrices (columnas de A = filas de B)")
         
@@ -1265,6 +1274,8 @@ def algebra_matricial_ui():
                 st.warning("️ La matriz es singular (no invertible)")
             else:
                 st.info(" La matriz es invertible")
+
+    # MATRIZ INVERSA
     
     elif operacion == "Inversa de matriz":
         st.info(" Calcula la matriz inversa de una matriz cuadrada")
@@ -1309,7 +1320,12 @@ def algebra_matricial_ui():
             except np.linalg.LinAlgError:
                 st.error(" Error: La matriz no es invertible")
 
-
+def seleccionar_metodo(categoria, metodo=None):
+    """Guarda la categoría y el método seleccionados en el estado de la sesión."""
+    st.session_state.categoria = categoria
+    if metodo:
+        st.session_state.metodo_nl = metodo
+    st.experimental_rerun()
 # ==========
 # MENÚ PRINCIPAL
 # ==========
@@ -1357,6 +1373,12 @@ def main():
     </div>
     <hr>
     """, unsafe_allow_html=True)
+     # --- INICIALIZACIÓN DEL ESTADO DE SESIÓN ---
+    if 'categoria' not in st.session_state:
+        st.session_state.categoria = " Inicio"
+    if 'metodo_nl' not in st.session_state:
+        st.session_state.metodo_nl = "Bisección"
+    # -------------------------------------------
     # Sidebar para navegación
     st.sidebar.header("️ Menú de Métodos")
     
@@ -1369,6 +1391,11 @@ def main():
         # 1. CÓDIGO CSS PARA ESTILOS Y ANIMACIONES
         st.markdown("""
         <style>
+        body {
+            background: linear-gradient(-45deg, #2E86C1, #2980B9, #8E44AD, #C0392B, #16A085);
+            background-size: 400% 400%;
+            animation: gradient-animation 10s ease infinite;
+        }
         /* Animación de entrada general */
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(20px); }
@@ -1471,13 +1498,11 @@ def main():
         """, unsafe_allow_html=True)
 
         # 2. ESTRUCTURA DE LA PÁGINA CON LAS TARJETAS DE CONTENIDO
-        st.markdown("<div class='welcome-text'><h2>Contenido Disponible</h2></div>", unsafe_allow_html=True)
+        st.markdown("<div class='welcome-text'><h1>Contenido Disponible</h1></div>", unsafe_allow_html=True)
         st.markdown("<hr>", unsafe_allow_html=True)
-        # --- AÑADIMOS LOS GIFs CON TAMAÑO UNIFORME Y CENTRADOS ---
-        gif_width = 250  # Define el ancho deseado para todos los GIFs (ajusta este valor)
+        # --- CARACTERISTICAS DE LOS GIFT ---
+        gif_width = 250  # Definicion de ancho de los gift
         
-        # Usamos st.columns para colocar los GIFs uno al lado del otro y centrarlos
-        # Puedes ajustar el número de columnas (e.g., [1, 3, 1] si quieres más espacio a los lados)
         col_gif1, col_gif2, col_gif3, col_gif4, col_gif5 = st.columns([1.5, 2, 2, 2, 1.5])
 
         with col_gif2:
@@ -1499,8 +1524,7 @@ def main():
                 width=gif_width
             )
         st.markdown("<br>", unsafe_allow_html=True) # Espacio para separar los GIFs de las tarjetas
-        # -----------------------------------------------------------
-
+       
         col1, col2, col3 = st.columns(3)
 
         with col1:
@@ -1552,7 +1576,7 @@ def main():
             """, unsafe_allow_html=True)
         
         
-        
+    # SISTEMAS NO LINEALES    
     elif categoria == " Sistemas No Lineales":
         st.markdown("<h2 style='text-align:center;'>Sistemas No Lineales</h2>", unsafe_allow_html=True)
         st.markdown("---")
@@ -1602,10 +1626,7 @@ def main():
     - Jhonel Apaza Pacompia
     - Brayhan Quispe Cama
     """)
-
     ##st.sidebar.success(" Aplicación lista para usar")
-
-
 # Ejecutar la aplicación
 if __name__ == "__main__":
     main()
