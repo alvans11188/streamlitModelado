@@ -1473,6 +1473,33 @@ def main():
         # 2. ESTRUCTURA DE LA PÁGINA CON LAS TARJETAS DE CONTENIDO
         st.markdown("<div class='welcome-text'><h2>Contenido Disponible</h2></div>", unsafe_allow_html=True)
         st.markdown("<hr>", unsafe_allow_html=True)
+        # --- AÑADIMOS LOS GIFs CON TAMAÑO UNIFORME Y CENTRADOS ---
+        gif_width = 250  # Define el ancho deseado para todos los GIFs (ajusta este valor)
+        
+        # Usamos st.columns para colocar los GIFs uno al lado del otro y centrarlos
+        # Puedes ajustar el número de columnas (e.g., [1, 3, 1] si quieres más espacio a los lados)
+        col_gif1, col_gif2, col_gif3, col_gif4, col_gif5 = st.columns([1.5, 2, 2, 2, 1.5])
+
+        with col_gif2:
+            st.image(
+                "https://es.symbolab.com/public/images/graphing.webp", 
+                
+                width=gif_width
+            )
+        with col_gif3:
+            st.image(
+                "https://es.symbolab.com/public/images/worksheets.webp", 
+                
+                width=gif_width
+            )
+        with col_gif4:
+            st.image(
+                "https://es.symbolab.com/public/images/calculators.webp", 
+                
+                width=gif_width
+            )
+        st.markdown("<br>", unsafe_allow_html=True) # Espacio para separar los GIFs de las tarjetas
+        # -----------------------------------------------------------
 
         col1, col2, col3 = st.columns(3)
 
