@@ -1612,9 +1612,9 @@ def rk4_ui():
     f_str = st.text_input("f(x,y)", "x + y", key="rk4_f")
     c1, c2, c3, c4 = st.columns(4)
     with c1: x0 = st.number_input("x0", 0.0, key="rk_x0")
-    with c2: y0 = st.number_input("y0", 1.0, key="rk_y0")
+    with c2: y0 = st.number_input("y0", 0.5, key="rk_y0")
     with c3: h = st.number_input("paso h", 0.1, key="rk_h")
-    with c4: xn = st.number_input("x final", 1.0, key="rk_xn")
+    with c4: xn = st.number_input("x final", 0.5, key="rk_xn")
     
     if st.button("Calcular RK4"):
         try:
@@ -1651,10 +1651,10 @@ def rk2_ui():
     # Corrección: Se usa 'value=' explícitamente y se pone un min_value muy bajo o None
     c1, c2, c3, c4 = st.columns(4)
     with c1: 
-        # t0 puede ser cualquier número
+        
         x0 = st.number_input("x0 (t0)", value=0.0, format="%.2f", key="rk2_x0")
     with c2: 
-        # y0 ahora permite valores menores a 1 porque definimos 'value' explícitamente
+        
         y0 = st.number_input("y0", value=0.5, format="%.2f", key="rk2_y0")
     with c3: 
         h = st.number_input("paso h", value=0.1, step=0.01, format="%.2f", key="rk2_h")
@@ -1670,18 +1670,14 @@ def rk2_ui():
             
             while xs[-1] < xn - 1e-9:
                 xi, yi = xs[-1], ys[-1]
-                
-                # --- CAMBIOS IMPORTANTES SEGÚN TU IMAGEN ---
-                
+                               
                 # Paso 1: k1 (Pendiente al inicio)
                 k1 = f(xi, yi)
                 
                 # Paso 2: k2 (Pendiente en el punto medio)
-                # La imagen dice: f(tn + h/2, yn + h/2 * k1)
                 k2 = f(xi + h/2, yi + (h/2) * k1)
                 
                 # Paso 3: Actualización
-                # La imagen dice: yn+1 = yn + h * k2
                 y_next = yi + h * k2
                 
                 # -------------------------------------------
