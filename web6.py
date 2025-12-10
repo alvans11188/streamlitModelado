@@ -1635,6 +1635,61 @@ def rk4_ui():
             with col1: st.dataframe({"x": xs, "y": ys})
             with col2: st.line_chart(pd.DataFrame({"y": ys}, index=xs))
         except Exception as e: st.error(str(e))
+def rk2_ui():
+    st.subheader("Runge-Kutta 2 (Método del Punto Medio)")
+    # Mostramos la fórmula exacta de tu imagen para que no haya dudas
+    st.latex(r"""
+    \begin{aligned}
+    k_1 &= f(t_n, y_n) \\
+    k_2 &= f(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1) \\
+    y_{n+1} &= y_n + h \cdot k_2
+    \end{aligned}
+    """)
+    
+    f_str = st.text_input("f(x,y)", "x + y", key="rk2_f")
+    
+    c1, c2, c3, c4 = st.columns(4)
+    with c1: x0 = st.number_input("x0", 0.0, key="rk2_x0")
+    with c2: y0 = st.number_input("y0", 1.0, key="rk2_y0")
+    with c3: h = st.number_input("paso h", 0.1, key="rk2_h")
+    with c4: xn = st.number_input("x final", 1.0, key="rk2_xn")
+    
+    if st.button("Calcular RK2"):
+        try:
+            x, y = sp.symbols('x y')
+            f = lambdify((x,y), parse_expr(f_str), 'numpy')
+            
+            xs, ys = [x0], [y0]
+            
+            while xs[-1] < xn - 1e-9:
+                xi, yi = xs[-1], ys[-1]
+                
+                # --- CAMBIOS IMPORTANTES SEGÚN TU IMAGEN ---
+                
+                # Paso 1: k1 (Pendiente al inicio)
+                k1 = f(xi, yi)
+                
+                # Paso 2: k2 (Pendiente en el punto medio)
+                # La imagen dice: f(tn + h/2, yn + h/2 * k1)
+                k2 = f(xi + h/2, yi + (h/2) * k1)
+                
+                # Paso 3: Actualización
+                # La imagen dice: yn+1 = yn + h * k2
+                y_next = yi + h * k2
+                
+                # -------------------------------------------
+                
+                xs.append(xi + h)
+                ys.append(y_next)
+                
+            col1, col2 = st.columns([1,2])
+            with col1: 
+                st.dataframe({"x": xs, "y": ys})
+            with col2: 
+                st.line_chart(pd.DataFrame({"y": ys}, index=xs))
+                
+        except Exception as e: 
+            st.error(f"Error: {str(e)}")
 # ==========
 # MENÚ PRINCIPAL
 # ==========
@@ -1921,6 +1976,7 @@ def main():
                     <li>Euler</li>
                     <li>Taylor (Orden 2)</li>
                     <li>Runge-Kutta 4</li>
+                    <li>Runge-Kutta 2</li>
                 </ul>
             </div>
             """, unsafe_allow_html=True)
@@ -1976,10 +2032,11 @@ def main():
 
     elif categoria == " Ecuaciones Diferenciales":
         st.title("Ecuaciones Diferenciales (EDO)")
-        metodo = st.selectbox("Método:", ["Euler", "Taylor (Orden 2)", "Runge-Kutta 4"])
+        metodo = st.selectbox("Método:", ["Euler", "Taylor (Orden 2)", "Runge-Kutta 4","Runge-Kutta 2"])
         if metodo == "Euler": euler_ui()
         elif metodo == "Taylor (Orden 2)": taylor_ui()
         elif metodo == "Runge-Kutta 4": rk4_ui()
+        elif metodo == "Runge-Kutta 2": rk2_ui()
         
     # Footer
     st.sidebar.markdown("---")
