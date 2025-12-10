@@ -1648,11 +1648,18 @@ def rk2_ui():
     
     f_str = st.text_input("f(x,y)", "x + y", key="rk2_f")
     
+    # Corrección: Se usa 'value=' explícitamente y se pone un min_value muy bajo o None
     c1, c2, c3, c4 = st.columns(4)
-    with c1: x0 = st.number_input("x0", 0.0, key="rk2_x0")
-    with c2: y0 = st.number_input("y0", 1.0, key="rk2_y0")
-    with c3: h = st.number_input("paso h", 0.1, key="rk2_h")
-    with c4: xn = st.number_input("x final", 1.0, key="rk2_xn")
+    with c1: 
+        # t0 puede ser cualquier número
+        x0 = st.number_input("x0 (t0)", value=0.0, format="%.2f", key="rk2_x0")
+    with c2: 
+        # y0 ahora permite valores menores a 1 porque definimos 'value' explícitamente
+        y0 = st.number_input("y0", value=0.5, format="%.2f", key="rk2_y0")
+    with c3: 
+        h = st.number_input("paso h", value=0.1, step=0.01, format="%.2f", key="rk2_h")
+    with c4: 
+        xn = st.number_input("x final", value=0.5, step=0.1, format="%.2f", key="rk2_xn")
     
     if st.button("Calcular RK2"):
         try:
